@@ -1,0 +1,56 @@
+version: "3"
+services:
+  symfony.nginx:
+    container_name: symfony.nginx
+    hostname: symfony.nginx
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - php_sockets:/var/run/sockets:rw
+      - ./:/var/www/html:rw
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:rw
+    ports:
+      - 32978:80
+
+  symfony.php:
+    container_name: symfony.php
+    hostname: symfony.php
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - php_sockets:/var/run/sockets:rw
+      - mysql_sockets:/var/run/mysqld:rw
+      - ./:/var/www/html:rw
+    environment:
+      USER_ID: 1000
+      USER_NAME: user
+
+  symfony.mysql:
+    container_name: symfony.mysql
+    hostname: symfony.mysql
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_sockets:/var/run/mysqld
+    environment:
+      MYSQL_ROOT_PASSWORD: BRW31Nw3T_G_0YPE
+      MYSQL_DATABASE: visa_stage
+      MYSQL_USER: root
+      MYSQL_PASSWORD: DfnOwStGdz--5fox
+  adminer:
+    image: adminer
+    container_name: symfony.adminer
+    restart: always
+    hostname: symfony.adminer
+    ports:
+      - 8080
+
+volumes:
+  php_sockets:
+  mysql_data:
+  mysql_sockets:

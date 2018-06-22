@@ -8,7 +8,6 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - php_sockets:/var/run/sockets:rw
       - ./:/var/www/html:rw
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:rw
     ports:
@@ -38,19 +37,18 @@ services:
       - mysql_data:/var/lib/mysql
       - mysql_sockets:/var/run/mysqld
     environment:
-      MYSQL_ROOT_PASSWORD: BRW31Nw3T_G_0YPE
-      MYSQL_DATABASE: visa_stage
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: symfony
       MYSQL_USER: root
-      MYSQL_PASSWORD: DfnOwStGdz--5fox
-  adminer:
+      MYSQL_PASSWORD: 123
+  symfony.adminer:
     image: adminer
     container_name: symfony.adminer
     restart: always
     hostname: symfony.adminer
     ports:
       - 8080
-
-volumes:
-  php_sockets:
-  mysql_data:
-  mysql_sockets:
+#volumes:
+#  php_sockets:
+#  mysql_data:
+#  mysql_sockets:

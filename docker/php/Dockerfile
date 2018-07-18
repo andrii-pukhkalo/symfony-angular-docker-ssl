@@ -25,6 +25,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer global require "fxp/composer-asset-plugin:*"
 RUN sed -i "s/listen = .*/listen = 0.0.0.0:9000/" /etc/php/7.2/fpm/pool.d/www.conf
 
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g @angular/cli
+
 WORKDIR /var/www
 
 EXPOSE 9000

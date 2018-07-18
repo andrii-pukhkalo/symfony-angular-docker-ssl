@@ -8,10 +8,17 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./:/var/www/html:rw
+      - ./api/:/var/www/html/api:rw
+      - ./angular/:/var/www/html/angular:rw
+      - ./docker/certs:/var/www/html/certs:ro
+      - ./docker/nginx/snippets:/etc/nginx/snippets:rw
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:rw
+      - ./docker/logs:/var/log/nginx:rw
+
     ports:
       - 32978:80
+      - 32979:4200
+      - 443:443
 
   symfony.php:
     container_name: symfony.php
@@ -21,21 +28,23 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - php_sockets:/var/run/sockets:rw
-      - mysql_sockets:/var/run/mysqld:rw
-      - ./:/var/www/html:rw
-    environment:
-      USER_ID: 1000
-      USER_NAME: user
+      - ./api:/var/www/html/api:rw
+
+  symfony.angular:
+    container_name: symfony.angular
+    hostname: symfony.angular
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./angular:/var/www/html/angular:rw
 
   symfony.mysql:
     container_name: symfony.mysql
     hostname: symfony.mysql
     image: mysql:5.7
     restart: always
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - mysql_sockets:/var/run/mysqld
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: symfony
@@ -46,9 +55,3 @@ services:
     container_name: symfony.adminer
     restart: always
     hostname: symfony.adminer
-    ports:
-      - 8080
-#volumes:
-#  php_sockets:
-#  mysql_data:
-#  mysql_sockets:

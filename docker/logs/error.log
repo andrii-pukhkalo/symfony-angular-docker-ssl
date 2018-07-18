@@ -1,0 +1,2 @@
+2018/07/18 15:18:57 [warn] 6#6: "ssl_stapling" ignored, issuer certificate not found for certificate "/var/www/html/certs/symfony.crt"
+2018/07/18 15:18:57 [warn] 6#6: "ssl_stapling" ignored, issuer certificate not found for certificate "/var/www/html/certs/symfony.crt"

@@ -1,0 +1,8 @@
+#original source of ssl
+https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
+
+#for generate certs
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./your-path-inside-project/nginx-selfsigned.key -out ./your-path-inside-project/nginx-selfsigned.crt
+
+#for dhparam cert
+sudo openssl dhparam -out ./your-path-inside-project/dhparam.pem 2048

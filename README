@@ -6,3 +6,7 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./your-path-ins
 
 #for dhparam cert
 sudo openssl dhparam -out ./your-path-inside-project/dhparam.pem 2048
+
+#write virtual host
+127.0.0.1 dev.symfony.com www.dev.symfony.com
+127.0.0.1 dev.client.symfony.com www.dev.client.symfony.com
